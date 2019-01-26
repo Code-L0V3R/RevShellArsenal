@@ -94,7 +94,7 @@ def main():
         p_os = g_json_data[i]["os"]
         p_template = g_json_data[i]["template"]
         
-        if args.payload.lower() == "all" or args.payload.lower() == p_type.lower() or (p_type == "shell" and p_subtype == args.payload and p_format != "raw"):
+        if args.payload.lower() == "all" or args.payload.lower() == p_type.lower() or ((p_type == "shell" or p_type == "cmd") and p_subtype == args.payload and p_format != "raw"):
             if (p_format == "raw" and args.raw == True) or (p_format != "raw" and args.raw == False) or (p_format == "raw" and args.encode == True):
                 payload = p_template.replace("{LHOST}", args.lhost).replace("{LPORT}", str(args.lport)) 
                 title = ""

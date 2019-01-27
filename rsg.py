@@ -88,6 +88,7 @@ def main():
         p_format = g_json_data[i]["format"]
         p_os = g_json_data[i]["os"]
         p_template = g_json_data[i]["template"]
+        p_web_delivery = g_json_data[i]["web-delivery"]
         
         if args.payload.lower() == "all" or args.payload.lower() == p_type.lower() or ((p_type == "shell" or p_type == "cmd") and p_subtype == args.payload and p_format != "raw"):
             if (p_format == "raw" and args.raw == True) or (p_format != "raw" and args.raw == False) or (p_format == "raw" and args.encode == True):
@@ -99,11 +100,15 @@ def main():
                     title = "[{}{}{}][{}{}{}][{}{}{}]".format(C_RED, p_type.upper(), C_RST, C_RED, p_subtype.upper(), C_RST, C_BLU, "ENCODED" if args.encode else p_format.upper(), C_RST)
                 if args.encode == False:
                     print_payload(title, payload)
+                    if p_web_delivery == True:
+                        print("{}[!] A web server is required to host the payload.{}".format(C_YEL, C_RST))
                     g_payload_count += 1
                 else:
                     payload_encoded = encode_payload(payload, p_os, p_type)
                     if payload_encoded != "":
                         print_payload(title, payload_encoded)
+                        if p_web_delivery == True:
+                            print("{}[!] A web server is required to host the payload.{}".format(C_YEL, C_RST))
                         g_payload_count += 1
     
     if g_payload_count == 0:

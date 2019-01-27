@@ -3,7 +3,7 @@
 ___RevShellArsenal___ is a small tool I wrote to generate reverse shells in differents languages, based on widely known techniques (e.g.: pentestmonkey cheat sheet). 
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/itm4n/RevShellArsenal/master/screenshots/01_demo-all.png">
+  <img src="https://raw.githubusercontent.com/itm4n/RevShellArsenal/master/screenshots/00_RevShellArsenal.gif">
 </p>
 
 ## Usage

